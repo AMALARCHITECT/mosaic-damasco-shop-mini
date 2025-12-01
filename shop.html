@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mosaic Damasco | Shop</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="images/mosaic-damasco-logo.png" alt="Mosaic Damasco logo">
+            <span class="brand-name">Mosaic Damasco</span>
+        </div>
+
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="shop.html" class="active">Shop</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Page header -->
+    <section class="page-header">
+        <h1>Shop Mini Collection</h1>
+        <p>Select your favorite pieces. Use the ♥ button to save them in your favorites.</p>
+    </section>
+
+    <!-- Shop content -->
+    <section class="products-container">
+
+        <!-- Product grid -->
+        <div class="products-grid">
+
+            <!-- Product 1 -->
+            <article class="product-card" data-id="campane-signature">
+                <img src="images/campane-di-natale.jpg" alt="Campane di Natale – Edizione Signature Mosaic">
+                <h3>Campane di Natale – Edizione Signature Mosaic</h3>
+                <p class="product-desc">
+                    Campane leggere stampate in 3D, ispirate ai mosaici damasceni. Disponibili in vari colori
+                    festivi con gancio anallergico.
+                </p>
+                <p class="product-price">8,00 €</p>
+                <button class="favorite-btn">♥ Add to favorites</button>
+            </article>
+
+            <!-- Product 2 -->
+            <article class="product-card" data-id="omino-signature">
+                <img src="images/omino-signature.jpg" alt="Omino – Edizione Signature Mosaic">
+                <h3>Omino – Edizione Signature Mosaic</h3>
+                <p class="product-desc">
+                    Piccolo omino natalizio con texture glitter e incisione Mosaic Damasco. Ultra–leggero
+                    e perfetto per le feste.
+                </p>
+                <p class="product-price">7,00 €</p>
+                <button class="favorite-btn">♥ Add to favorites</button>
+            </article>
+
+            <!-- Product 3 -->
+            <article class="product-card" data-id="stella-rossa-mediterranea">
+                <img src="images/stella-rossa-mediterranea.jpg" alt="Orecchini “Stella Rossa Mediterranea”">
+                <h3>Orecchini “Stella Rossa Mediterranea”</h3>
+                <p class="product-desc">
+                    Stella geometrica ispirata ai mosaici del Mediterraneo. Colore rosso intenso, elegante
+                    e leggera sull’orecchio.
+                </p>
+                <p class="product-price">10,00 €</p>
+                <button class="favorite-btn">♥ Add to favorites</button>
+            </article>
+
+            <!-- Product 4 -->
+            <article class="product-card" data-id="omino-di-natale-2025">
+                <img src="images/omino-di-natale-2025.jpg" alt="Orecchini Omino di Natale – Collezione 2025">
+                <h3>Orecchini Omino di Natale – Collezione 2025</h3>
+                <p class="product-desc">
+                    Omini natalizi stampati in 3D, disponibili in diversi colori glitter. Leggeri,
+                    anallergici e perfetti come regalo.
+                </p>
+                <p class="product-price">5,00–7,00 €</p>
+                <button class="favorite-btn">♥ Add to favorites</button>
+            </article>
+
+            <!-- Product 5 -->
+            <article class="product-card" data-id="cuore-infinito-heritage">
+                <img src="images/cuore-infinito.jpg" alt="Cuore Infinito – Collezione Heritage">
+                <h3>Cuore Infinito – Collezione Heritage</h3>
+                <p class="product-desc">
+                    Cuore stilizzato ispirato al tema dell’amore eterno. Design minimal, leggero e con
+                    ganci anallergici.
+                </p>
+                <p class="product-price">6,00 €</p>
+                <button class="favorite-btn">♥ Add to favorites</button>
+            </article>
+
+            <!-- Product 6 -->
+            <article class="product-card" data-id="albero-di-natale-festiva">
+                <img src="images/albero-di-natale.jpg" alt="Albero di Natale – Edizione Festiva">
+                <h3>Albero di Natale – Edizione Festiva</h3>
+                <p class="product-desc">
+                    Albero stilizzato con geometrie a mosaico levantino. Perfetto per aggiungere un tocco
+                    artistico alle feste.
+                </p>
+                <p class="product-price">8,00 €</p>
+                <button class="favorite-btn">♥ Add to favorites</button>
+            </article>
+
+        </div>
+
+        <!-- Favorites sidebar -->
+        <aside class="favorites-panel">
+            <h2>Your Favorites</h2>
+            <p id="favorites-empty">No favorites yet. Click ♥ on any product.</p>
+            <ul id="favorites-list"></ul>
+        </aside>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        📍 Damascus, Syria • 📧 mosaicdamasco@gmail.com • © 2025 Mosaic Damasco
+    </footer>
+
+    <!-- JavaScript: favorites system -->
+    <script>
+        const FAVORITES_KEY = 'mosaic_damasco_favorites';
+        const favoriteButtons = document.querySelectorAll('.favorite-btn');
+        const favoritesList = document.getElementById('favorites-list');
+        const favoritesEmpty = document.getElementById('favorites-empty');
+
+        function loadFavorites() {
+            const saved = localStorage.getItem(FAVORITES_KEY);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveFavorites(favs) {
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs));
+        }
+
+        function renderFavorites() {
+            const favs = loadFavorites();
+            favoritesList.innerHTML = '';
+
+            if (favs.length === 0) {
+                favoritesEmpty.style.display = 'block';
+                return;
+            }
+
+            favoritesEmpty.style.display = 'none';
+
+            favs.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item.name + ' – ' + item.price;
+                favoritesList.appendChild(li);
+            });
+        }
+
+        function setInitialButtonStates() {
+            const favs = loadFavorites();
+
+            favoriteButtons.forEach(btn => {
+                const card = btn.closest('.product-card');
+                const id = card.getAttribute('data-id');
+                const found = favs.find(f => f.id === id);
+
+                if (found) {
+                    btn.classList.add('is-favorite');
+                    btn.textContent = '♥ In favorites';
+                }
+            });
+        }
+
+        favoriteButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const card = btn.closest('.product-card');
+                const id = card.getAttribute('data-id');
+                const name = card.querySelector('h3').textContent;
+                const price = card.querySelector('.product-price').textContent;
+
+                let favs = loadFavorites();
+                const existingIndex = favs.findIndex(f => f.id === id);
+
+                if (existingIndex >= 0) {
+                    // remove from favorites
+                    favs.splice(existingIndex, 1);
+                    btn.classList.remove('is-favorite');
+                    btn.textContent = '♥ Add to favorites';
+                } else {
+                    // add to favorites
+                    favs.push({ id, name, price });
+                    btn.classList.add('is-favorite');
+                    btn.textContent = '♥ In favorites';
+                }
+
+                saveFavorites(favs);
+                renderFavorites();
+            });
+        });
+
+        // initial render
+        renderFavorites();
+        setInitialButtonStates();
+    </script>
+
+</body>
+</html>
